@@ -1,0 +1,23 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    {{each baseExtends}}
+    "{{$value}}"{{if $index < baseExtends.length - 1}},{{/if}}
+    {{/each}}
+  ],
+  "parser": "{{parser}}",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    {{each plugins}}
+    "{{$value}}"{{if $index < plugins.length - 1}},{{/if}}
+    {{/each}}
+  ],
+  "rules": {
+  }
+}

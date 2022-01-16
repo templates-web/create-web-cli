@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "stylelint-config-standard"
+    {{if usePrettier}},"stylelint-config-prettier"{{/if}}
+  ]
+}
