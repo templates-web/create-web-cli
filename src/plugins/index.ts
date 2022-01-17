@@ -73,8 +73,10 @@ abstract class Plugin {
     return this
   }
   format(source: string) {
-    // TODO: Filter by file ext
-    return prettier.format(source, { parser: 'json' })
+    if (this.tool?.configFile?.endsWith('.json')) {
+      return prettier.format(source, { parser: 'json' })
+    }
+    return source
   }
   beforeWrite() {
     // You can writer special logic before write template to file
@@ -86,3 +88,5 @@ export { Tool, Feedback, Dependencies, OutputMap, Builder, Plugin, Questions }
 export { default as Prettier } from './prettier'
 export { default as Stylelint } from './stylelint'
 export { default as ESLint } from './eslint'
+export { default as TypeScript } from './typescript'
+export { default as Git } from './git'

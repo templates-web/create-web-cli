@@ -5,7 +5,7 @@
 
 import { createCommand } from './commander'
 import Builder from './Builder'
-import { Prettier, Stylelint, ESLint } from './plugins'
+import { Prettier, Stylelint, ESLint, TypeScript, Git } from './plugins'
 
 const exit = process.exit
 
@@ -19,6 +19,8 @@ async function startInteractive() {
   builder.addPlugin(new Prettier())
   builder.addPlugin(new Stylelint())
   builder.addPlugin(new ESLint())
+  builder.addPlugin(new TypeScript())
+  builder.addPlugin(new Git())
 
   // Wait for user input
   await builder.prompt()

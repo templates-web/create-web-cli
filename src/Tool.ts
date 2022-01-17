@@ -9,7 +9,7 @@ import inquirer from 'inquirer'
 
 import { Dependencies } from './Dependencies'
 
-export abstract class Tool {
+abstract class Tool {
   abstract readonly toolName: string
 
   /**
@@ -44,3 +44,5 @@ export interface Feedback {
 }
 
 export type Questions = inquirer.DistinctQuestion<any>[]
+
+export { Tool }
