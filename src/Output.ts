@@ -7,29 +7,9 @@
  * Final output file for a tool config
  */
 export interface OutputFile<TplOptions extends Object> {
-  filename: string
-  path?: string
   template: string
   options?: TplOptions
-}
+  filename: string
+  format: (source: string) => string
 
-export class OutputSet {
-  files: OutputFile<any>[]
-
-  constructor() {
-    this.files = []
-  }
-
-  add = <TplOptions>(file: OutputFile<TplOptions>): OutputSet => {
-    this.files.push(file)
-    return this
-  }
-
-  update = <TplOptions>(index: number, options: TplOptions): OutputSet => {
-    this.files[index].options = {
-      ...this.files[index].options,
-      ...options,
-    }
-    return this
-  }
-}
+export type OutputMap<TplOptions> = Map<string, OutputFile<TplOptions>>

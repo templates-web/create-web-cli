@@ -22,10 +22,6 @@ export default class Stylelint implements Tool {
       type: 'devDependencies',
       name: 'stylelint-config-standard',
     },
-    {
-      type: 'devDependencies',
-      name: 'stylelint-config-prettier',
-    },
   ]
   questions: Questions = [
     {

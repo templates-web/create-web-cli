@@ -6,9 +6,10 @@
 import inquirer from 'inquirer'
 import fs from 'fs-extra'
 import path from 'path'
+import template from 'art-template'
 
 import { Tool } from './Tool'
-import { OutputSet } from './Output'
+import { OutputMap } from './Output'
 
 import { Plugin } from './plugins'
 
@@ -19,7 +20,7 @@ export default class Builder {
 
   plugins: Plugin[]
 
-  outputSet: OutputSet
+  outputMap: OutputMap<any>
 
   questions: any
 
@@ -27,7 +28,7 @@ export default class Builder {
     this.toolMap = new Map()
     this.plugins = []
     this.questions = []
-    this.outputSet = new OutputSet()
+    this.outputMap = new Map()
   }
 
   addPlugin = (plugin: Plugin): Builder => {
@@ -63,7 +64,7 @@ export default class Builder {
   }
 
   // 2. Build config by toolMap
-  buildOutputSet = (): Builder => {
+  buildOutput = (): Builder => {
     this.plugins.forEach(({ buildOutput, tool }) => {
       if (!tool || tool.feedback.enable) {
         buildOutput?.()
@@ -72,12 +73,23 @@ export default class Builder {
     return this
   }
 
-  write() {
-    console.log(this)
+  beforeWrite(): Builder {
+    this.plugins.forEach((plugin) => {
+      plugin.beforeWrite()
+    })
+    return this
+  }
+
+  write(): Builder {
     const tmpDir = path.join(process.cwd(), '__temp')
     fs.emptyDirSync(tmpDir)
-    for (let file of this.outputSet.files) {
-      fs.outputFileSync(path.join(tmpDir, file.filename), file.template)
+    for (let [name, output] of this.outputMap) {
+      const content = template.render(output.template, output.options)
+      fs.outputFileSync(
+        path.join(tmpDir, output.filename),
+        output.format(content)
+      )
     }
+    return this
   }
 }

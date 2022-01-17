@@ -3,13 +3,7 @@
  * @date 2022-01-16 14:20:29
  */
 
-import { Command } from 'commander'
-
-import { version } from '../package.json'
-import { WELCOME_TEXT } from './utils/helper'
 import { createCommand } from './commander'
-
-/* --------------------------------- Plugins -------------------------------- */
 import Builder from './Builder'
 import { Prettier, Stylelint, ESLint } from './plugins'
 
@@ -29,9 +23,7 @@ async function startInteractive() {
   // Wait for user input
   await builder.prompt()
 
-  builder.buildOutputSet()
-
-  builder.write()
+  builder.buildOutput().beforeWrite().write()
 }
 
 /**

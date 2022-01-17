@@ -3,7 +3,7 @@
  * @date 2022-01-15 16:06:52
  */
 
-import { OutputSet, Plugin, Tool } from '../'
+import { Plugin, Tool } from '../'
 import template from 'art-template'
 
 import Stylelint from './Tool'
@@ -14,19 +14,26 @@ export default class StylelintPlugin extends Plugin {
     this.tool = new Stylelint()
   }
 
-  buildOutput() {
-    const usePrettier = !!this.builder.toolMap.get(PRETTIER_NAME)
-    if (this.tool && !usePrettier) {
-      this.tool.dependencies = this.tool.dependencies?.filter(
-        (dep) => 'stylelint-config-prettier' !== dep.name
-      )
+  getTplFilePath(): string {
+    return __dirname + '/.stylelintrc.art'
+  }
+
+  getTplOptions(): object {
+    return {
+      enablePrettier: this.enablePrettier(),
     }
-    const tpl = template(__dirname + '/.stylelintrc.art', {
-      usePrettier,
+  }
+
+  beforeWrite(): void {
+    const enablePrettier = this.enablePrettier()
+    if (!this.tool?.dependencies || !enablePrettier) return
+    this.tool.dependencies?.push({
+      type: 'devDependencies',
+      name: 'stylelint-config-prettier',
     })
-    this.builder.outputSet.add({
-      filename: this.tool?.configFile as string,
-      template: this.format(tpl),
-    })
+  }
+
+  enablePrettier(): boolean {
+    return !!this.builder.toolMap.get(PRETTIER_NAME)
   }
 }

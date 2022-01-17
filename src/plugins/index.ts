@@ -4,9 +4,10 @@
  */
 
 import prettier from 'prettier'
+import fs from 'fs-extra'
 
 import Builder from '../Builder'
-import { OutputSet } from '../Output'
+import { OutputMap } from '../Output'
 import { Dependencies } from '../Dependencies'
 import { Tool, Feedback, Questions } from '../Tool'
 
@@ -54,13 +55,33 @@ abstract class Plugin {
   }
 
   /* ------------------------------ Build output ------------------------------ */
+  getTplFilePath() {
+    return ''
+  }
+  getTplOptions(): object {
+    return {}
+  }
+  buildOutput() {
+    if (!this.tool?.configFile || !this.getTplFilePath()) return
+    const tpl = fs.readFileSync(this.getTplFilePath(), 'utf8')
+    this.builder.outputMap.set(this.tool.toolName, {
+      filename: this.tool.configFile,
+      template: tpl,
+      format: this.format,
+      options: this.getTplOptions?.(),
+    })
+    return this
+  }
   format(source: string) {
+    // TODO: Filter by file ext
     return prettier.format(source, { parser: 'json' })
   }
-  abstract buildOutput?(): void
+  beforeWrite() {
+    // You can writer special logic before write template to file
+  }
 }
 
-export { Tool, Feedback, Dependencies, OutputSet, Builder, Plugin, Questions }
+export { Tool, Feedback, Dependencies, OutputMap, Builder, Plugin, Questions }
 
 export { default as Prettier } from './prettier'
 export { default as Stylelint } from './stylelint'
