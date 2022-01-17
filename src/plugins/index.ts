@@ -11,7 +11,7 @@ import { OutputMap } from '../Output'
 import { Dependencies } from '../Dependencies'
 import { Tool, Feedback, Questions } from '../Tool'
 
-abstract class Plugin {
+export class Plugin {
   /**
    * See src/Builder
    * A plugin hold the builder, so it can do anything that you want
@@ -43,7 +43,7 @@ abstract class Plugin {
   /**
    * If you plan to build a tool, just load it
    */
-  abstract loadTool?(): void
+  loadTool() {}
 
   /* ---------------------------- Build basic data ---------------------------- */
   buildQuestions(): Questions {
@@ -61,6 +61,12 @@ abstract class Plugin {
   getTplOptions(): object {
     return {}
   }
+  getOutPutPath() {
+    return './'
+  }
+  afterPrompt(): void {}
+  // DELETE:
+  beforeOutput(): void {}
   buildOutput() {
     if (!this.tool?.configFile || !this.getTplFilePath()) return
     const tpl = fs.readFileSync(this.getTplFilePath(), 'utf8')
@@ -69,6 +75,7 @@ abstract class Plugin {
       template: tpl,
       format: this.format,
       options: this.getTplOptions?.(),
+      path: this.getOutPutPath(),
     })
     return this
   }
@@ -81,12 +88,6 @@ abstract class Plugin {
   beforeWrite() {
     // You can writer special logic before write template to file
   }
+  afterWrite() {}
 }
-
-export { Tool, Feedback, Dependencies, OutputMap, Builder, Plugin, Questions }
-
-export { default as Prettier } from './prettier'
-export { default as Stylelint } from './stylelint'
-export { default as ESLint } from './eslint'
-export { default as TypeScript } from './typescript'
-export { default as Git } from './git'
+export { Tool, Feedback, Dependencies, OutputMap, Builder, Questions }

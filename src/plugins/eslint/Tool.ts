@@ -7,7 +7,7 @@ import { Dependencies, Tool, Feedback, Questions } from '../'
 
 const TOOL_NAME = 'eslint'
 
-export default class ESint implements Tool {
+export default class ESint extends Tool {
   readonly toolName = TOOL_NAME
   configFile = '.eslintrc.json'
   feedback: Feedback = {
@@ -19,15 +19,15 @@ export default class ESint implements Tool {
       name: 'eslint',
     },
   ]
-  questions: Questions = [
-    {
-      type: 'confirm',
-      name: TOOL_NAME,
-      message: 'Do you want to use eslint ?',
-      default: true,
-      prefix: '👍',
-    },
-  ]
+  // questions: Questions = [
+  //   {
+  //     type: 'confirm',
+  //     name: TOOL_NAME,
+  //     message: 'Do you want to use eslint ?',
+  //     default: true,
+  //     prefix: '👍',
+  //   },
+  // ]
   userFeedback(answers: any): Feedback {
     this.feedback = {
       enable: !!answers[TOOL_NAME],

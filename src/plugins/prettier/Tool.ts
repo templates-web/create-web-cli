@@ -7,7 +7,7 @@ import { Dependencies, Tool, Feedback, Questions } from '../'
 
 export const TOOL_NAME = 'prettier'
 
-export default class Prettier implements Tool {
+export default class Prettier extends Tool {
   readonly toolName = TOOL_NAME
   configFile = '.prettierrc.json'
   feedback: Feedback = {
@@ -19,15 +19,15 @@ export default class Prettier implements Tool {
       name: 'prettier',
     },
   ]
-  questions: Questions = [
-    {
-      type: 'confirm',
-      name: TOOL_NAME,
-      message: 'Do you want to use prettier ?',
-      default: true,
-      prefix: '👍',
-    },
-  ]
+  // questions: Questions = [
+  //   {
+  //     type: 'confirm',
+  //     name: TOOL_NAME,
+  //     message: 'Do you want to use prettier ?',
+  //     default: true,
+  //     prefix: '👍',
+  //   },
+  // ]
   userFeedback(answers: any): Feedback {
     this.feedback = {
       enable: !!answers[TOOL_NAME],

@@ -7,7 +7,7 @@ import { Dependencies, Tool, Feedback, Questions } from '../'
 
 const TOOL_NAME = 'stylelint'
 
-export default class Stylelint implements Tool {
+export default class Stylelint extends Tool {
   readonly toolName = TOOL_NAME
   configFile = '.stylelintrc.json'
   feedback: Feedback = {
@@ -23,15 +23,15 @@ export default class Stylelint implements Tool {
       name: 'stylelint-config-standard',
     },
   ]
-  questions: Questions = [
-    {
-      type: 'confirm',
-      name: TOOL_NAME,
-      message: 'Do you want to use stylelint ?',
-      default: true,
-      prefix: '👍',
-    },
-  ]
+  // questions: Questions = [
+  //   {
+  //     type: 'confirm',
+  //     name: TOOL_NAME,
+  //     message: 'Do you want to use stylelint ?',
+  //     default: true,
+  //     prefix: '👍',
+  //   },
+  // ]
   userFeedback(answers: any): Feedback {
     this.feedback = {
       enable: !!answers[TOOL_NAME],

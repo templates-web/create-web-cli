@@ -7,6 +7,7 @@ import inquirer from 'inquirer'
 import fs from 'fs-extra'
 import path from 'path'
 import template from 'art-template'
+import { spawnSync as spawn } from 'child_process'
 
 import { Tool } from './Tool'
 import { OutputMap } from './Output'
@@ -50,17 +51,28 @@ export default class Builder {
   prompt = async (): Promise<any> => {
     return inquirer.prompt<any>(this.questions).then((answers) => {
       // Map Filter by answers
-      Object.keys(answers).forEach((toolName) => {
-        const _tool = this.toolMap.get(toolName)
-        if (_tool) {
-          const feedback = _tool.userFeedback(answers)
-          if (!feedback.enable) {
-            this.toolMap.delete(toolName)
-          }
+      for (const [name, tool] of this.toolMap) {
+        const feedback = tool.userFeedback(answers)
+        if (!feedback.enable) {
+          this.toolMap.delete(name)
         }
-      })
+      }
       return answers
     })
+  }
+
+  afterPrompt() {
+    this.plugins.forEach((plugin) => {
+      plugin.afterPrompt()
+    })
+    return this
+  }
+
+  beforeOutput() {
+    this.plugins.forEach((plugin) => {
+      plugin.beforeOutput()
+    })
+    return this
   }
 
   // 2. Build config by toolMap
@@ -86,10 +98,47 @@ export default class Builder {
     for (let [name, output] of this.outputMap) {
       const content = template.render(output.template, output.options)
       fs.outputFileSync(
-        path.join(tmpDir, output.filename),
+        path.join(tmpDir, output.path, output.filename),
         output.format(content)
       )
     }
     return this
+  }
+
+  afterWrite(): Builder {
+    this.plugins.forEach((plugin) => {
+      plugin.afterWrite()
+    })
+    return this
+  }
+
+  install(): void {
+    const dependiencies: string[] = []
+    const devDependiencies: string[] = []
+    for (let [name, tool] of this.toolMap) {
+      if (tool.dependencies) {
+        tool.dependencies.forEach((dep) => {
+          if (dep.type === 'dependencies') {
+            // TODO: Version support ?
+            dependiencies.push(dep.name)
+          } else {
+            devDependiencies.push(dep.name)
+          }
+        })
+      }
+    }
+
+    const outputPath = path.join(process.cwd(), '__temp')
+
+    // TODO: Chooose manager ???
+    let manager = 'pnpm'
+    spawn(manager, ['i', ...dependiencies], {
+      stdio: 'inherit',
+      cwd: outputPath,
+    })
+    spawn(manager, ['i', '-D', ...devDependiencies], {
+      stdio: 'inherit',
+      cwd: outputPath,
+    })
   }
 }

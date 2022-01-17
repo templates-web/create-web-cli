@@ -5,7 +5,7 @@
 
 import { Plugin, Tool } from '../'
 
-import TS from './Tool'
+import TS, { TOOL_NAME } from './Tool'
 
 export default class TSPlugin extends Plugin {
   loadTool() {
@@ -16,3 +16,5 @@ export default class TSPlugin extends Plugin {
     return __dirname + '/tsconfig.art'
   }
 }
+
+export { TOOL_NAME }

@@ -5,32 +5,30 @@
 
 import { Dependencies, Tool, Feedback, Questions } from '../'
 
-export const TOOL_NAME = 'typescript'
+export const TOOL_NAME = 'build'
 
-export default class TS extends Tool {
+export enum BUILD_LIST {
+  Webpack = 'webpack',
+  Vite = 'vite',
+}
+
+export default class Build extends Tool {
   readonly toolName = TOOL_NAME
-  configFile = 'tsconfig.json'
   feedback: Feedback = {
     enable: true,
   }
-  dependencies: Dependencies = [
-    {
-      type: 'devDependencies',
-      name: 'typescript',
-    },
-  ]
   questions: Questions = [
     {
-      type: 'confirm',
+      type: 'list',
       name: TOOL_NAME,
-      message: 'Do you want to use typescript ?',
-      default: true,
-      prefix: '👍',
+      message: 'Please choose a build tool',
+      choices: ['Webpack', 'Vite'],
     },
   ]
   userFeedback(answers: any): Feedback {
     this.feedback = {
       enable: !!answers[TOOL_NAME],
+      build: (answers[TOOL_NAME] as string).toLowerCase(),
     }
     return this.feedback
   }

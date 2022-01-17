@@ -1,0 +1,13 @@
+{
+  "name": "{{name}}",
+  "version": "1.0.0",
+  "description": "",
+  "main": "postcss.config.js",
+  "scripts": {
+    "start": "webpack server"
+  },
+  "author": "x@y.com",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

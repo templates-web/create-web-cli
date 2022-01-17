@@ -1,0 +1,13 @@
+{
+  "exclude": ["source/"],
+  "jsc": {
+    "parser": {
+      "syntax": "typescript"
+    },
+    "target": "es2018",
+    "keepClassNames": true
+  },
+  "module": {
+    "type": "commonjs"
+  }
+}

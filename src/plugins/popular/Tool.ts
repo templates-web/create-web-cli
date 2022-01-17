@@ -5,32 +5,31 @@
 
 import { Dependencies, Tool, Feedback, Questions } from '../'
 
-export const TOOL_NAME = 'typescript'
+export const TOOL_NAME = 'popular'
 
-export default class TS extends Tool {
+export enum LIB_LIST {
+  React = 'react',
+  Vue = 'vue',
+}
+
+export default class Popular extends Tool {
   readonly toolName = TOOL_NAME
-  configFile = 'tsconfig.json'
   feedback: Feedback = {
     enable: true,
   }
-  dependencies: Dependencies = [
-    {
-      type: 'devDependencies',
-      name: 'typescript',
-    },
-  ]
   questions: Questions = [
     {
-      type: 'confirm',
+      type: 'list',
       name: TOOL_NAME,
-      message: 'Do you want to use typescript ?',
-      default: true,
-      prefix: '👍',
+      message: 'Please choose a popular library',
+      // choices: Object.values(LIB_LIST).filter((val) => typeof val === 'string'),
+      choices: ['React', 'Vue'],
     },
   ]
   userFeedback(answers: any): Feedback {
     this.feedback = {
       enable: !!answers[TOOL_NAME],
+      library: (answers[TOOL_NAME] as string).toLowerCase(),
     }
     return this.feedback
   }
