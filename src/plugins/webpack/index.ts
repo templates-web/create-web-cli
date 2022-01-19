@@ -34,13 +34,19 @@ export default class WebpackPlugin extends Plugin {
       cssProcessor = 'sass'
     }
 
+    const cssProcessorLoader = `${cssProcessor}-loader`
+
     const config = {
       entry: entryFile,
     }
+    this.tool?.dependencies?.push({
+      type: 'devDependencies',
+      name: cssProcessorLoader,
+    })
     return {
       config,
       testJSExt: `(js|${fileExt})${jsx ? 'x?' : ''}`,
-      cssProcessor: `${cssProcessor}-loader`,
+      cssProcessor: cssProcessorLoader,
     }
   }
 }

@@ -1,0 +1,11 @@
+module.exports = {
+  content: [
+    {{each content}}
+    '{{$value}}',
+    {{/each}}
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}

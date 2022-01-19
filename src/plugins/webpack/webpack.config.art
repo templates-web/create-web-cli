@@ -30,7 +30,7 @@ const config = {
       },
       {
         test: /\.(le|sa|c)ss$/i,
-        use: ['style-loader', 'postcss-loader', '{{cssProcessor}}'],
+        use: ['style-loader','css-loader', 'postcss-loader', '{{cssProcessor}}'],
       },
     ],
   },

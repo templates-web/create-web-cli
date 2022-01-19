@@ -1,5 +1,9 @@
 const config = {
-  plugins: [require('autoprefixer'), require('cssnano')],
+  plugins: [
+    {{if tailwindcss}}require('tailwindcss'),{{/if}}
+    require('autoprefixer'), 
+    require('cssnano')
+  ],
 }
 
 module.exports = config

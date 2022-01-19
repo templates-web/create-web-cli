@@ -8,17 +8,18 @@ import Builder from './Builder'
 
 // Plugins
 import Prettier from './plugins/prettier'
-import Stylelint from './plugins/Stylelint'
-import ESLint from './plugins/ESLint'
-import TypeScript from './plugins/TypeScript'
+import Stylelint from './plugins/stylelint'
+import ESLint from './plugins/eslint'
+import TypeScript from './plugins/typescript'
 import Git from './plugins/Git'
-import Popular from './plugins/Popular'
-import Build from './plugins/Build'
-import Html from './plugins/Html'
-import Css from './plugins/Css'
-import Babel from './plugins/Babel'
-import Dependiences from './plugins/Dependiences'
-import Project from './plugins/Project'
+import Popular from './plugins/popular'
+import Build from './plugins/build'
+import Html from './plugins/html'
+import Css from './plugins/css'
+import Babel from './plugins/babel'
+import Dependiences from './plugins/dependiences'
+import Project from './plugins/project'
+import Tailwindcss from './plugins/tailwindcss'
 
 const exit = process.exit
 
@@ -30,16 +31,17 @@ async function startInteractive() {
 
   // Add plugins...
   builder.addPlugin(new Project())
-  builder.addPlugin(new Html())
-  builder.addPlugin(new Css())
-  builder.addPlugin(new Prettier())
+  builder.addPlugin(new Git())
   builder.addPlugin(new Stylelint())
   builder.addPlugin(new ESLint())
-  builder.addPlugin(new TypeScript())
-  builder.addPlugin(new Git())
-  builder.addPlugin(new Popular())
-  builder.addPlugin(new Babel())
+  builder.addPlugin(new Prettier())
+  builder.addPlugin(new Html())
+  builder.addPlugin(new Css())
+  builder.addPlugin(new Tailwindcss())
   builder.addPlugin(new Build())
+  builder.addPlugin(new Babel())
+  builder.addPlugin(new TypeScript())
+  builder.addPlugin(new Popular())
   builder.addPlugin(new Dependiences())
 
   // Wait for user input

@@ -5,7 +5,7 @@
 
 import { Dependencies, Tool, Feedback, Questions } from '../../'
 
-const TOOL_NAME = 'postcss'
+export const TOOL_NAME = 'postcss'
 
 export default class PostCss extends Tool {
   readonly toolName = TOOL_NAME

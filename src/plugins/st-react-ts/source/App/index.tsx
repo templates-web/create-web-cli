@@ -9,6 +9,7 @@ import { observer } from 'mobx-react-lite'
 import { user } from '@/services'
 import { Provider, rootStore } from "@/states";
 
+import './global.css'
 
 interface AppProps { }
 

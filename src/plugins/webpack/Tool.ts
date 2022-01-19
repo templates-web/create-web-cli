@@ -36,6 +36,10 @@ export default class Webpack extends Tool {
     },
     {
       type: 'devDependencies',
+      name: 'css-loader',
+    },
+    {
+      type: 'devDependencies',
       name: 'postcss-loader',
     },
     {
