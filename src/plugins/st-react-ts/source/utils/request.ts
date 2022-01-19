@@ -5,9 +5,15 @@
 
 import axios from 'axios'
 
-import { rootStore } from '@/states'
+let globalState = null
 
-const { global: globalState } = rootStore
+/**
+ * ! Call as early as possible !
+ * See: src/states/index.ts#injectState
+ */
+export function injectState(state) {
+  globalState = state.global
+}
 
 export const BASE_URL = '/api'
 
@@ -24,7 +30,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    globalState.setXHRLoading(config.url, true)
+    globalState?.setXHRLoading(config.url, true)
     return config
   },
   function (error) {
@@ -38,7 +44,7 @@ instance.interceptors.response.use(
   function ({ config, data }) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-    globalState.setXHRLoading(config.url, false)
+    globalState?.setXHRLoading(config.url, false)
     return data
   },
   function (error) {

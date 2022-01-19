@@ -6,17 +6,22 @@
 import { createContext, useContext } from 'react'
 import { Instance, onSnapshot, types } from 'mobx-state-tree'
 
-import User from './User'
+import { injectState } from '@/utils/request'
+
 import Global from './Global'
+import User from './User'
+import Home from './Home'
 
 const RootModel = types.model({
   user: types.optional(User, {}),
   global: types.optional(Global, {
     loading: true,
   }),
+  home: types.optional(Home, {}),
 })
 
 let initialState = RootModel.create({})
+injectState(initialState)
 
 export const rootStore = initialState
 
@@ -35,5 +40,5 @@ export function useStates() {
 }
 
 onSnapshot(rootStore, (snapshot) => {
-  console.log(snapshot)
+  // You can store data here
 })
