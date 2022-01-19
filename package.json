@@ -2,7 +2,7 @@
   "name": "create-web-cli",
   "version": "0.0.1",
   "description": "A tool for create web project simple.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "debug": "nodemon --no-stdin --ignore lib/ --ignore __temp/ ./src/index.ts create",
     "c": "swc ./src -d dist -D -w --include-dotfiles",
