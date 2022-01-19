@@ -36,6 +36,9 @@ const config = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    alias: {
+      '@': path.join(process.cwd(), 'src')
+    }
   },
 }
 

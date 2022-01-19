@@ -21,5 +21,9 @@ export default class React extends Tool {
       type: 'dependencies',
       name: 'react-dom',
     },
+    {
+      type: 'dependencies',
+      name: 'mobx-react-lite',
+    },
   ]
 }

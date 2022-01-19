@@ -41,5 +41,8 @@
     "fs-extra": "^10.0.0",
     "inquirer": "^8.2.0",
     "prettier": "^2.5.1"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

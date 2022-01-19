@@ -20,6 +20,32 @@ export default class Project extends Tool {
       message: 'Please input project name：',
     },
   ]
+  dependencies: Dependencies = [
+    {
+      type: 'dependencies',
+      name: 'axios',
+    },
+    {
+      type: 'devDependencies',
+      name: 'msw',
+    },
+    {
+      type: 'dependencies',
+      name: 'core-js',
+    },
+    {
+      type: 'dependencies',
+      name: 'regenerator-runtime',
+    },
+    {
+      type: 'dependencies',
+      name: 'mobx',
+    },
+    {
+      type: 'dependencies',
+      name: 'mobx-state-tree',
+    },
+  ]
   userFeedback(answers: any): Feedback {
     this.feedback.name = answers.projectName
     return this.feedback
