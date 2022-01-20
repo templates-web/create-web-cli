@@ -16,7 +16,11 @@ export default class CssPlugin extends Plugin {
   }
 
   afterPrompt() {
+    /**
+     * We use postcss by default which is convenient.
+     */
     this.builder.addPlugin(new PostCss())
+
     if (this.tool?.feedback.processor === PREPROCESSOR_LIST.Sass) {
       this.builder.addPlugin(new Sass())
     } else {

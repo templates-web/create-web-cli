@@ -1,14 +1,24 @@
 {
-  "name": "create-web-cli",
-  "version": "0.0.1",
+  "name": "x-cwc",
+  "version": "0.0.5",
   "description": "A tool for create web project simple.",
   "main": "dist/index.js",
+  "bin": "./lib/index.js",
+  "files": [
+    "lib",
+    "LICENSE",
+    "package.json",
+    "README.md"
+  ],
   "scripts": {
     "debug": "nodemon --no-stdin --ignore lib/ --ignore cwc-project/ ./src/index.ts create",
-    "c": "swc ./src -d dist -D -w --include-dotfiles",
+    "c": "swc ./src -d lib -D -w --include-dotfiles",
     "test": "node ./dist/index.js create",
-    "cpi": "copyfiles src/**/source/** dist -u 1 -V",
-    "ct": "cp -R src/plugins/st-react-ts/source/ cwc-project/src"
+    "cpi": "copyfiles src/**/source/** lib -u 1 -V",
+    "ct": "echo ct",
+    "ct:d": "cp -R src/plugins/st-react-ts/source/ cwc-project/src",
+    "build": "swc ./src -d lib -D --include-dotfiles",
+    "postbuild": "npm run cpi"
   },
   "repository": {
     "type": "git",

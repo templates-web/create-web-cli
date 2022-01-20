@@ -11,6 +11,6 @@ import fs from 'fs-extra'
 
 export default class STReactPlugin extends Plugin {
   afterWrite(): void {
-    fs.copySync(__dirname + '/source', path.join(process.cwd(), '__temp/src'))
+    fs.copySync(__dirname + '/source', path.join(this.builder.rootPath, 'src'))
   }
 }

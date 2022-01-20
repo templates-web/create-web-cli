@@ -22,7 +22,7 @@ export default class Build extends Tool {
       type: 'list',
       name: TOOL_NAME,
       message: 'Please choose a build tool',
-      choices: ['Webpack', 'Vite'],
+      choices: ['Webpack'],
     },
   ]
   userFeedback(answers: any): Feedback {

@@ -19,19 +19,19 @@ export default class TS extends Tool {
       name: 'typescript',
     },
   ]
-  questions: Questions = [
-    {
-      type: 'confirm',
-      name: TOOL_NAME,
-      message: 'Do you want to use typescript ?',
-      default: true,
-      prefix: '👍',
-    },
-  ]
-  userFeedback(answers: any): Feedback {
-    this.feedback = {
-      enable: !!answers[TOOL_NAME],
-    }
-    return this.feedback
-  }
+  // questions: Questions = [
+  //   {
+  //     type: 'confirm',
+  //     name: TOOL_NAME,
+  //     message: 'Do you want to use typescript ?',
+  //     default: true,
+  //     prefix: '👍',
+  //   },
+  // ]
+  // userFeedback(answers: any): Feedback {
+  //   this.feedback = {
+  //     enable: !!answers[TOOL_NAME],
+  //   }
+  //   return this.feedback
+  // }
 }

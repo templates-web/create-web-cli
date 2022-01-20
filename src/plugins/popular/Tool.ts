@@ -23,7 +23,7 @@ export default class Popular extends Tool {
       name: TOOL_NAME,
       message: 'Please choose a popular library',
       // choices: Object.values(LIB_LIST).filter((val) => typeof val === 'string'),
-      choices: ['React', 'Vue'],
+      choices: ['React'],
     },
   ]
   userFeedback(answers: any): Feedback {

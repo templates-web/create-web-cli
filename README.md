@@ -7,7 +7,7 @@ CWC 是一个通过插件方式支持不同工具，生成相应的配置文件�
 ### 快速开始
 
 ```
-pnpx cwc create
+npx x-cwc create
 ```
 
 ![create](./pngs/create.gif)
@@ -15,12 +15,11 @@ pnpx cwc create
 ### 启动
 
 ```
-pnpm start
+npm start
 ```
 
 ![create](./pngs/react-ts.png)
 
 ### TODO
 
-- [ ] 发布到 Npm
 - [ ] 插件扩展
