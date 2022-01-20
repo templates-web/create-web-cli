@@ -14,6 +14,8 @@ import { OutputMap } from './Output'
 
 import { Plugin } from './plugins'
 
+import { TOOL_NAME as PROJECT_NAME } from './plugins/project'
+
 export type ToolMap = Map<string, Tool>
 
 export default class Builder {
@@ -30,6 +32,14 @@ export default class Builder {
     this.plugins = []
     this.questions = []
     this.outputMap = new Map()
+  }
+
+  get project() {
+    return this.toolMap.get(PROJECT_NAME)
+  }
+
+  get rootPath() {
+    return this.project?.feedback?.rootPath
   }
 
   addPlugin = (plugin: Plugin): Builder => {
@@ -93,12 +103,12 @@ export default class Builder {
   }
 
   write(): Builder {
-    const tmpDir = path.join(process.cwd(), '__temp')
-    fs.emptyDirSync(tmpDir)
+    const rootPath = this.rootPath
+    fs.emptyDirSync(rootPath)
     for (let [name, output] of this.outputMap) {
       const content = template.render(output.template, output.options)
       fs.outputFileSync(
-        path.join(tmpDir, output.path, output.filename),
+        path.join(rootPath, output.path, output.filename),
         output.format(content)
       )
     }
@@ -128,8 +138,7 @@ export default class Builder {
       }
     }
 
-    const outputPath = path.join(process.cwd(), '__temp')
-
+    const outputPath = this.rootPath
     // TODO: Chooose manager ???
     let manager = 'pnpm'
     spawn(manager, ['i', ...dependiencies], {
